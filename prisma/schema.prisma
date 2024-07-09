@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model ban {
+  id             BigInt  @id @default(autoincrement())
+  ban_champion   String? @db.VarChar(255)
+  ban_team_color String? @db.VarChar(255)
+  match_code     String? @db.VarChar(255)
+}
+
+model game_data {
+  id            BigInt    @id @default(autoincrement())
+  assists       Int
+  champion      String?   @db.VarChar(255)
+  date          DateTime? @db.DateTime(0)
+  deaths        Int
+  kills         Int
+  match_code    String?   @db.VarChar(255)
+  nickname      String?   @db.VarChar(255)
+  position      String?   @db.VarChar(255)
+  summoner_name String?   @db.VarChar(255)
+  team_color    String?   @db.VarChar(255)
+  winning       Int
+}
+
+model lolboard {
+  id          Int       @id @default(autoincrement())
+  category    String?   @db.VarChar(255)
+  content     String?   @db.VarChar(255)
+  time        DateTime? @db.DateTime(6)
+  title       String?   @db.VarChar(255)
+  visit       Int
+  writer      String?   @db.VarChar(255)
+  youtube_url String?   @db.VarChar(255)
+}
+
+model match_code {
+  id         BigInt  @id @default(autoincrement())
+  match_code String? @db.VarChar(255)
+  winning    Int
+}
+
+model name_nickname {
+  id       BigInt  @id @default(autoincrement())
+  name     String? @db.VarChar(255)
+  nickname String? @db.VarChar(255)
+}
+
+model champion {
+  id       Int    @id @default(autoincrement())
+  champion String @db.VarChar(255)
+}
+
+model ip {
+  id   Int       @id
+  ip   String?   @db.VarChar(255)
+  date DateTime? @db.DateTime(0)
+}
+
+model users {
+  id         Int       @id @default(autoincrement())
+  username   String    @unique(map: "username") @db.VarChar(255)
+  password   String    @db.VarChar(255)
+  email      String    @unique(map: "email") @db.VarChar(255)
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  updated_at DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model announcements {
+  id          Int       @id @default(autoincrement())
+  title       String    @db.VarChar(255)
+  content     String    @db.Text
+  createDate  DateTime? @default(now()) @db.Timestamp(0)
+  expiredDate DateTime? @db.Timestamp(0)
+}
